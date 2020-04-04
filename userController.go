@@ -19,18 +19,18 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(resp)
 		return
 	}
-	resp := FindOne(user.Email, user.Password)
+	resp := FindOne(user.Username, user.Password)
 	json.NewEncoder(w).Encode(resp)
 }
 
-func FindOne(email, password string) map[string]interface{} {
+func FindOne(username, password string) map[string]interface{} {
 	user := &User{}
 
-	if err := db.Where("Email = ?", email).First(user).Error; err != nil {
-		var resp = map[string]interface{}{"status": false, "message": "Email address not found"}
+	if err := db.Where("Username = ?", username).First(user).Error; err != nil {
+		var resp = map[string]interface{}{"status": false, "message": "Username not found"}
 		return resp
 	}
-	expiresAt := time.Now().Add(time.Minute * 100000).Unix()
+	expiresAt := time.Now().Add(time.Hour * 100000).Unix()
 
 	errf := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if errf != nil && errf == bcrypt.ErrMismatchedHashAndPassword { //Password does not match!
