@@ -7,7 +7,8 @@ import (
 type ApplicationForm struct {
 	Id              uint      `json:"id"`
 	MissionDate     time.Time `json:"mission_date"`
-	DepartureCityId uint
+	City            City
+	DepartureCityId uint `json:"-"`
 }
 
 func (*ApplicationForm) TableName() string {
