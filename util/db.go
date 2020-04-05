@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"github.com/ak98neon/authserver/model"
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
@@ -35,7 +36,7 @@ func ConnectDb() *gorm.DB {
 
 	// Migrate the schema
 	db.AutoMigrate(
-		&User{})
+		&model.User{})
 
 	fmt.Println("Successfully connected!", db)
 	return db
