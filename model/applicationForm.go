@@ -1,10 +1,14 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+)
 
 type ApplicationForm struct {
-	gorm.Model
+	Id          uint      `json:"id"`
+	MissionDate time.Time `json:"mission_date"`
+}
 
-	Id          int    `json:"id"`
-	MissionDate string `json:"mission_date"`
+func (*ApplicationForm) TableName() string {
+	return "application_form"
 }

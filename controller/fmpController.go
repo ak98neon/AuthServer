@@ -7,7 +7,7 @@ import (
 )
 
 var GetAllForms = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	form := &model.ApplicationForm{}
+	form := &[]model.ApplicationForm{}
 
 	find := db.Find(form)
 
