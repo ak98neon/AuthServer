@@ -1,4 +1,4 @@
-package main
+package controller
 
 import (
 	"encoding/json"
@@ -10,6 +10,7 @@ import (
 )
 
 var db = ConnectDb()
+var mySigningKey = []byte("secret")
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	user := &User{}
@@ -49,7 +50,7 @@ func FindOne(username, password string) map[string]interface{} {
 
 	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
 
-	tokenString, error := token.SignedString([]byte("secret"))
+	tokenString, error := token.SignedString(mySigningKey)
 	if error != nil {
 		fmt.Println(error)
 	}
