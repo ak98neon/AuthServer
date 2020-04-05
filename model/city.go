@@ -1,9 +1,8 @@
 package model
 
 type City struct {
-	Id              uint   `json:"id"`
-	Name            string `json:"name"`
-	ApplicationForm ApplicationForm
+	Id   uint   `json:"id"`
+	Name string `json:"name"`
 }
 
 func (*City) TableName() string {
