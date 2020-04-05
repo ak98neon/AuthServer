@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/ak98neon/authserver/model"
+	"github.com/ak98neon/authserver/secret"
 	"github.com/ak98neon/authserver/util"
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
@@ -51,7 +52,7 @@ func FindOne(username, password string) map[string]interface{} {
 
 	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
 
-	tokenString, error := token.SignedString(mySigningKey)
+	tokenString, error := token.SignedString(secret.MySigningKey)
 	if error != nil {
 		fmt.Println(error)
 	}

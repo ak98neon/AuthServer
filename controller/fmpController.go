@@ -2,11 +2,12 @@ package controller
 
 import (
 	"encoding/json"
+	"github.com/ak98neon/authserver/model"
 	"net/http"
 )
 
 var GetAllForms = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	form := &ApplicationForm{}
+	form := &model.ApplicationForm{}
 
 	find := db.Find(form)
 
