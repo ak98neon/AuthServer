@@ -1,6 +1,8 @@
 package route
 
 import (
+	"github.com/ak98neon/authserver/controller"
+	"github.com/ak98neon/authserver/secret"
 	"github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
@@ -12,8 +14,8 @@ func Routes() *mux.Router {
 	r := mux.NewRouter()
 	r.Use(CommonMiddleware)
 
-	r.HandleFunc("/login", Login).Methods("POST")
-	r.Handle("/forms", jwtMiddleware().Handler(GetAllForms)).Methods("GET")
+	r.HandleFunc("/login", controller.Login).Methods("POST")
+	r.Handle("/forms", jwtMiddleware().Handler(controller.GetAllForms)).Methods("GET")
 	return r
 }
 
@@ -31,7 +33,7 @@ func CommonMiddleware(next http.Handler) http.Handler {
 func jwtMiddleware() *jwtmiddleware.JWTMiddleware {
 	return jwtmiddleware.New(jwtmiddleware.Options{
 		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
-			return mySigningKey, nil
+			return secret.MySigningKey, nil
 		},
 		SigningMethod: jwt.SigningMethodHS256,
 	})

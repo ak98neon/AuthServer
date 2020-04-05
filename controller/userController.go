@@ -3,17 +3,18 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/ak98neon/authserver/model"
+	"github.com/ak98neon/authserver/util"
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
 )
 
-var db = ConnectDb()
-var mySigningKey = []byte("secret")
+var db = util.ConnectDb()
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	user := &User{}
+	user := &model.User{}
 	err := json.NewDecoder(r.Body).Decode(user)
 	if err != nil {
 		var resp = map[string]interface{}{"status": false, "message": "Invalid request"}
@@ -25,7 +26,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func FindOne(username, password string) map[string]interface{} {
-	user := &User{}
+	user := &model.User{}
 
 	if err := db.Where("Username = ?", username).First(user).Error; err != nil {
 		var resp = map[string]interface{}{"status": false, "message": "Username not found"}
@@ -39,7 +40,7 @@ func FindOne(username, password string) map[string]interface{} {
 		return resp
 	}
 
-	tk := &Token{
+	tk := &model.Token{
 		UserID: user.ID,
 		Name:   user.Username,
 		Email:  user.Email,

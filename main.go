@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/ak98neon/authserver/route"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
@@ -17,7 +18,7 @@ func main() {
 	port := os.Getenv("PORT")
 
 	// Handle routes
-	http.Handle("/", Routes())
+	http.Handle("/", route.Routes())
 
 	// serve
 	log.Printf("Server up on port '%s'", port)
