@@ -5,10 +5,12 @@ import (
 )
 
 type ApplicationForm struct {
-	Id              uint      `json:"id"`
-	MissionDate     time.Time `json:"mission_date"`
-	City            City
-	DepartureCityId uint `json:"-"`
+	Id                uint      `json:"id"`
+	MissionDate       time.Time `json:"mission_date"`
+	DepartureCity     City
+	DestinationCity   City
+	DepartureCityId   uint `json:"-"`
+	DestinationCityId uint `json:"-"`
 }
 
 func (*ApplicationForm) TableName() string {

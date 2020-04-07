@@ -11,11 +11,22 @@ var GetAllForms = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) 
 
 	find := db.Find(form)
 	for i, _ := range *form {
-		city := &model.City{}
-		db.Where("id = ?", (*form)[i].DepartureCityId).First(city)
-		(*form)[i].City = *city
+		(*form)[i].DepartureCity = *findDepartureCity((*form)[i])
+		(*form)[i].DestinationCity = *findDestinationCity((*form)[i])
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(find)
 })
+
+func findDepartureCity(form model.ApplicationForm) *model.City {
+	city := &model.City{}
+	db.Where("id = ?", form.DepartureCityId).First(city)
+	return city
+}
+
+func findDestinationCity(form model.ApplicationForm) *model.City {
+	city := &model.City{}
+	db.Where("id = ?", form.DestinationCityId).First(city)
+	return city
+}
