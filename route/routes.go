@@ -16,6 +16,8 @@ func Routes() *mux.Router {
 
 	r.HandleFunc("/login", controller.Login).Methods("POST")
 	r.Handle("/forms", jwtMiddleware().Handler(controller.GetAllForms)).Methods("GET")
+	r.Handle("/forms/approve", jwtMiddleware().Handler(controller.ApproveForm)).Methods("POST")
+	r.Handle("/forms/reject", jwtMiddleware().Handler(controller.RejectForm)).Methods("POST")
 	return r
 }
 
